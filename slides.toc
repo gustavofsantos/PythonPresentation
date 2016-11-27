@@ -1,0 +1,11 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {brazil}
+\beamer@sectionintoc {1}{Historinha do Python}{4}{0}{1}
+\beamer@subsectionintoc {1}{1}{Quem usa Python?}{5}{0}{1}
+\beamer@sectionintoc {2}{Ferramentas Interessantes}{5}{0}{2}
+\beamer@sectionintoc {3}{A Linguagem}{6}{0}{3}
+\beamer@sectionintoc {4}{OO e Python 3.x}{7}{0}{4}
+\beamer@sectionintoc {5}{Estruturas de Dados em Python}{8}{0}{5}
+\beamer@sectionintoc {6}{Hydra - Python Multitarefa}{9}{0}{6}
+\beamer@sectionintoc {7}{Coisas Legais no Python}{10}{0}{7}
+\beamer@sectionintoc {8}{Refer\IeC {\^e}ncias}{11}{0}{8}
