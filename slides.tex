@@ -1,23 +1,48 @@
 \documentclass[aspectratio=169]{beamer}
+
 \usepackage[utf8]{inputenc} % codificacao de caracteres
 \usepackage[T1]{fontenc}    % codificacao de fontes
 \usepackage[brazil]{babel}  % idioma
 
+\usepackage{setspace}
+\usepackage{listings}		% códigos
+\usepackage{color}
+
+\usepackage{hyperref}		% hyperlink
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color
+  basicstyle=\footnotesize,        % size of fonts used for the code
+  breaklines=true,                 % automatic line breaking only at whitespace
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color{mymauve},     % string literal style
+}
+
 \setbeamertemplate{footline}[frame number]
 \usetheme{metropolis}         % tema
-% \usecolortheme{orchid}      % cores
+\usecolortheme{orchid}      % cores
 \usefonttheme[onlymath]{serif} % fonte modo matematico
 
 % Titulo
-\title[\sc{Texto no rodap\'e}]{Python, o que é e porque usar}
+\title{Python, o que é e porque usar}
 \author[Gustavo Santos]{Gustavo Fernandes dos Santos \\
 \texttt{gfdsantos@inf.ufpel.edu.br}}
 \institute{UFPEL - Universidade Federal de Pelotas}
 
 \date{\today}
 
+%---------------------------------------------------------
+
 \begin{document}
 
+%-------------- TITULO --------------
 \begin{frame}
   \titlepage
 \end{frame}
@@ -32,18 +57,191 @@
     \end{itemize}
 \end{frame}
 
+%-------------- INDICE --------------
 \begin{frame}{Indice}
     \tableofcontents
 \end{frame}
 
+%---------------------------------------------------------
+
 \section{Historinha do Python}
 
-\subsection{Quem usa Python?}
+\begin{frame}
+    \frametitle{O que é Python?}
+    Python é uma linguagem de programação de propósito geral. É uma linguagem de
+script, logo obedece às regras de linguagens de script. Python é,
+muitas vezes, definida como uma \textbf{linguagem de script orientada a objetos}. A
+definição anterior acaba limitando o escopo atual do Python, que pode ser definido
+mais precisamente como uma \textbf{linguagem de programação de propósito geral, que
+suporta os paradigmas de programação procedural, funcional e orientado a objetos}.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Porque as Pessoas Usam Python?}
+    Esta é uma das primeiras questões que aparecem quando as pessoas pensam em
+usar Python. Existem tantas linguagens de programação por aí hoje que escolher uma
+linguagem específica para um determinado projeto torna-se uma tarefa difícil.
+
+    Mas não há regras. É uma questão pessoal. Mas há uma série de fatores que
+acabam chamando a atenção dos desenvolvedores para a linguagem da cobrinha.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Porque as Pessoas Usam Python?}
+    \begin{itemize}
+        \item \textbf{Produtividade.} Python é uma linguagem que proporciona que o
+mesmo que seria feito em alguma linguagem compilada e estaticamente tipada faria, mas com
+muito mais rapidez, reduzindo drasticamente o tempo de desenvolvimento do projeto. O
+código em Python é geralemnte 3 ou 5 vezes menor que o código equivalente em C++. Programas
+em Python rodam imediatamente após serem escritos, não necessitando de nenhum processo de
+compilação, ligação ou montagem.
+        \item \textbf{Portabilidade.} A maioria dos programas escritos em Python rodam
+na maioria dos sistemas operacionais para computadores. Um código pode ser totalmente
+portável entre Linux, Mac e Windows, se não utilizar ferramentas específicas destes
+sistemas operacionais. Python é interpretado, logo um sistema apenas necessita implementar
+o interpretador para rodar o código em Python. Existem
+também diversas bibliotecas de interface de usuário portáveis. Característica que permite que
+um programa tenha a mesma interface independente de onde seja executado.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Porque as pessoas usam Python?}
+    \begin{itemize}
+        \item \textbf{Suporte.} Python vem por padrão com uma coleção incrível de baterias.
+Contudo há uma infinidade de bibliotecas para as distribuições de Python, como bibliotecas
+de deep leaning - \textit{Tensorflow}, \textit{Theano} e etc; visão computacional,
+tendo como destaque a biblioteca \textit{OpenCV}. Python também também tem bibliotecas para
+computação numérica, como o \textit{NumPy}, análise de dados com o \textit{Pandas},
+desenvolvimento web com \textit{Django}, \textit{Flask} e muitas outras.
+        \item \textbf{Integração.} Python consegue facilmente se integrar com partes
+de alguma outra aplicação, como invocar códigos C e C++ e ser invocado por programas escritos
+em C ou C++. Pode se integrar com componentes Java e .NET. Python não é uma ferramenta
+singular, Python pode conviver facilmente com outros ecossistemas.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Existe alguma parte ruim?}
+    Python é uma linguagem de script, é interpretada. O fato de Python ser interpretado
+implica que nem sempre os programas em Python irão rodar com a mesma velocidade que programas
+equivalentes escritos em C/C++. Isto é relativamente raro hoje, mas ainda acontece.
+
+    A implementação em Python padrão hoje (3.5.2) traduz o código fonte para um código
+intermediário. O código intermediário - bytecode - é interpretado pela máquina virtual. Como
+o código em bytecode é interpretado, em vez de rodar diretamente no processador, há perdas
+de performance se comparados com código objeto gerado pelo gcc, por exemplo.
+\end{frame}
+
+\begin{frame}[fragile]
+    \begin{lstlisting}[language=python]
+In [1]: def mult(x, y):
+   ...:     z = x * y
+   ...:     return z
+   ...:
+
+In [2]: from dis import dis
+
+In [3]: dis(mult)
+  2           0 LOAD_FAST                0 (x)
+              3 LOAD_FAST                1 (y)
+              6 BINARY_MULTIPLY
+              7 STORE_FAST               2 (z)
+
+  3          10 LOAD_FAST                2 (z)
+             13 RETURN_VALUE
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Existe alguma parte ruim?}
+    O tempo de execução sempre irá depender do quanto você está disposto a abrir mão
+em prol das outras características boas do Python. No fim das contas, você irá decidir
+se vale mais a pena abrir mão de alguns milissegundos do tempo de execução ou dispender
+mais tempo com o desenvolvimento e manutenção da aplicação em alguma outra linguagem
+compilada, como C/C++.
+
+    Considerando a evolução das CPUs e a velocidade com que os dados são processados
+atualmente, na grande maioria dos casos, optar por uma linguagem como Python torna-se
+natural e seguro. Ainda mais considerando que é possível escrever as partes mais críticas
+do software em C/C++ e integrar com sua aplicação em Python.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Quem usa Python?}
+    Python dispõe de uma grande base de usuários e uma comunidade bastante ativa. Há vários
+anos diferentes ranks de uso de linguagens de programação citam Python como uma das 5
+linguagens mais usadas.
+
+    \begin{itemize}
+        \item \textbf{Google.} Google usa largamente Python na sua ferramenta de indexação -
+ Google Search. A empresa também usa Python para desenvolver seus sistemas de inteligencia
+artificial.
+        \item \textbf{Youtube.} Como um serviço do Google, o Youtube também usa largamente
+Python por baixo dos panos.
+        \item \textbf{Dropbox.} O cliente do Dropbox para desktops é escrito em Python.
+        \item \textbf{Pixar.} A Pixar (Toy Story) usa Python na produção de seus filmes de
+animação.
+        \item \textbf{NSA.} A agência americana usa Python para análise e criptografia dos
+dados.
+        \item \textbf{Netflix.} A Netflix usa Python na sua infraestrutura de software.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{O poder do Python}
+    Python está entre uma linguagem de script e linguagem de desenvolvimento de sistemas.
+Python contém toda a facilidade e simplicidade de linguagens de script (como Perl, Ruby e
+Scheme) e também ferramentas poderosas de engenharia de software, encontradas tipicamente
+em linguagens compiladas (como Java e C++).
+
+    \begin{itemize}
+        \item \textbf{Tipagem dinâmica.} Nomes (variáveis) em Python são apenas referências
+a objetos, objetos não ficam atrelados a um tipo específico de dado, são mutáveis.
+        \item \textbf{Gerenciamento de memória automático.} Python contém um coletor de
+lixo embutido na máquina virtual. Além disso, Python consegue alocar automaticamente
+objetos. O desenvolvedor não precisa se preocupar com problemas de baixo nível, a máquina
+virtual trata todos estes problemas automaticamente.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{O poder do Python}
+    \begin{itemize}
+        \item \textbf{Estruturas de dados incluídas.} Python vêm com as estruturas de
+dados mais utilizadas como listas, dicionários e strings como parte da linguagem.
+        \item \textbf{Programação escalável.} Python contém ferramentas para desenvolvimento
+de sistemas de larga escala, como modulos, classes e excessões.
+        \item \textbf{Ferramentas de terceiros.} Python é livre e aberto. Desenvolvedores
+são encorajados a contribuír com ferramentas. Você consegue encontrar ferramentas para
+acesso a bancos de dados, programação numérica, desenvolvimento de sistemas inteligentes,
+desenvolvimento web e muito mais.
+    \end{itemize}
+\end{frame}
 
 %---------------------------------------------------------
 
 \section{Ferramentas Interessantes}
 
+\begin{frame}
+    \frametitle{CPython}
+    CPython é a distribuição padrão do Python. O interpretador da linguagem é escrito
+em C (logo, chamado de CPython).
+\end{frame}
+
+\begin{frame}
+    \frametitle{IPython}
+    Esta apresentação foi construída quase que em sua totalidade utilizando o IPython para
+debug dos trechos de códigos mostrados ao longo da apresentação.
+\end{frame}
+
+\begin{frame}
+    \frametitle{PyPy}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Anaconda}
+\end{frame}
 
 %---------------------------------------------------------
 
@@ -52,19 +250,103 @@
 
 %---------------------------------------------------------
 
-\section{OO e Python 3.x}
+\section{Paradigmas de Programação e Python 3.x}
+
+\subsection{Python Funcional}
+
+\begin{frame}{3 Pilares das Linguagens Funcionais}
+
+    \begin{itemize}
+        \item \texttt{map}
+        \item \texttt{filter}
+        \item \texttt{reduce}
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{\texttt{map}}
+    Dada uma coleção e uma função tal que $C \mapsto U$, a função \texttt{map}
+transforma uma coleção de dados em outra.
+    \begin{lstlisting}[language=python]
+In [1]: map(lambda x: x * x, [1, 2, 3, 4, 5])
+Out[1]: <map at 0x7f1d2535bdd8>
+
+In [2]: list(map(lambda x: x * x, [1, 2, 3, 4, 5]))
+Out[2]: [1, 4, 9, 16, 25]
+    \end{lstlisting}
+    A função \texttt{map} é preguiçosa no Python 3.x. Somente irá avaliar o
+resultado quando preciso. \texttt{map} retorna um iterador.
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{\texttt{filter}}
+    Dada uma coleção e uma função predicado, a função \texttt{filter} irá "filtrar"
+todos os dados da coleção de entrada que retorne \texttt{True} quando aplicados na
+função predicado.
+    \begin{lstlisting}[language=python]
+In [3]: filter(lambda x: x%2 == 0, [1, 2, 3, 4, 5])
+Out[3]: <filter at 0x7f1d25381e48>
+
+In [4]: list(filter(lambda x: x%2 == 0, [1, 2, 3, 4, 5]))
+Out[4]: [2, 4]
+    \end{lstlisting}
+    A função \texttt{filter} também é preguiçosa. \texttt{filter} também retorna um
+iterador.
+\end{frame}
+
+\begin{frame}[fragile]
+    A função \texttt{reduce} foi removida do Python 3.x por detalhes de performance.
+Uma composição com laços de repetição é mais performatica do que o uso desta função.
+    \begin{lstlisting}[language=python]
+In [5]: from functools import reduce
+
+In [7]: reduce(lambda x, acum: x * acum, [1, 2, 3, 4, 5])
+Out[7]: 120
+    \end{lstlisting}
+    Entretanto está disponível na biblioteca \texttt{functools}.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Python não é uma boa linguagem funcional}
+    O paradigma de programação funcional exige diversas características. Python não
+obedece a estas características, logo não pode ser taxada como uma linguagem funcional,
+nem mesmo como tendo suporte a programação funcional, como Scala.
+\end{frame}
+
+%---------------------------------------------------------
 
 \section{Estruturas de Dados em Python}
 
+\subsection{Pandas}
+
+
+%---------------------------------------------------------
+
 \section{Hydra - Python Multitarefa}
+
+
+%---------------------------------------------------------
 
 \section{Coisas Legais no Python}
 
-\section{Referências}
+\subsection{Adicionando cache aos programas}
+
+\subsection{Compilando programas em Python}
+
+
+%---------------------------------------------------------
+
+\section{Aprenda Mais!}
 
 \begin{frame}
     Esta apresentação e todos os scripts apresentados estão disponíveis
-no repositório no GitHub: <link do repositorio>
+no repositório no GitHub:
+\url{https://github.com/gustavofsantos/PythonPresentation}
+\end{frame}
+
+\begin{frame}
+\titlepage
 \end{frame}
 
 \end{document}

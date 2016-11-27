@@ -1,0 +1,9 @@
+A função \texttt{reduce} foi removida do Python 3.x por detalhes de performance.
+Uma composição com laços de repetição é mais performatica do que o uso desta função.
+    \begin{lstlisting}[language=python]
+In [5]: from functools import reduce
+
+In [7]: reduce(lambda x, acum: x * acum, [1, 2, 3, 4, 5])
+Out[7]: 120
+    \end{lstlisting}
+    Entretanto está disponível na biblioteca \texttt{functools}.
