@@ -89,6 +89,20 @@
     \end{itemize}
 \end{frame}
 
+\begin{frame}
+	\frametitle{Para quem é esta apresentação?}
+	Para mim! Eu fiz essa apresentação pra mim. Minha memória não é boa, nunca foi boa
+o suficiente para tudo que eu quero/preciso saber. Trabalho com muitas linguagens hoje.
+Na faculdade preciso programar muito bem em C, Java e VHDL. Também desenvolvo aplicativos
+para Android, preciso manter o ecossistema em mente. Mantenho o meu servidor local escrito
+em Scala. Também já programei em Fortran, Haskell e Erlang, puramente para conhecer
+melhor estas linguagens e os paradigmas que implementam. Fazer essa apresentação foi um modo
+que encontrei para lembrar rapidamente de alguma questão básica sobre Python.
+
+	Esta apresentação é a primeira de uma série de apresentações sobre as demais linguagens
+e frameworks que conheço.
+\end{frame}
+
 %-------------- INDICE --------------
 \begin{frame}{Indice}
     \tableofcontents
@@ -746,6 +760,8 @@ Out[18]: 9227465
 \begin{frame}[fragile]
 	\frametitle{Adicionando cache aos programas}
 	\begin{lstlisting}
+In [7]: import fib_test
+
 In [8]: valores = [i for i in range(10, 30)]
 
 In [9]: tempos_cache = fib_test.test_cache(valores)
@@ -784,6 +800,8 @@ In [10]: tempos_rec = fib_test.test_rec(valores)
 	\begin{lstlisting}
 $ pip install PyInstaller
 	\end{lstlisting}
+
+	PyInstaller é...
 \end{frame}
 
 \begin{frame}[fragile]

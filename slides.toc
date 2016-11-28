@@ -1,13 +1,13 @@
 \beamer@endinputifotherversion {3.36pt}
 \select@language {brazil}
-\beamer@sectionintoc {1}{Historinha do Python}{4}{0}{1}
-\beamer@sectionintoc {2}{Ferramentas Interessantes}{15}{0}{2}
-\beamer@sectionintoc {3}{A Linguagem}{22}{0}{3}
-\beamer@sectionintoc {4}{Paradigmas de Programa\IeC {\c c}\IeC {\~a}o e Python 3.x}{39}{0}{4}
-\beamer@sectionintoc {5}{Estruturas de Dados em Python}{45}{0}{5}
-\beamer@subsectionintoc {5}{1}{Pandas}{46}{0}{5}
-\beamer@sectionintoc {6}{Hydra - Python Multitarefa}{46}{0}{6}
-\beamer@sectionintoc {7}{Coisas Legais no Python}{47}{0}{7}
-\beamer@subsectionintoc {7}{1}{Adicionando cache aos programas}{48}{0}{7}
-\beamer@subsectionintoc {7}{2}{Compilando programas em Python}{53}{0}{7}
-\beamer@sectionintoc {8}{Aprenda Mais!}{57}{0}{8}
+\beamer@sectionintoc {1}{Historinha do Python}{5}{0}{1}
+\beamer@sectionintoc {2}{Ferramentas Interessantes}{16}{0}{2}
+\beamer@sectionintoc {3}{A Linguagem}{23}{0}{3}
+\beamer@sectionintoc {4}{Paradigmas de Programa\IeC {\c c}\IeC {\~a}o e Python 3.x}{40}{0}{4}
+\beamer@sectionintoc {5}{Estruturas de Dados em Python}{46}{0}{5}
+\beamer@subsectionintoc {5}{1}{Pandas}{47}{0}{5}
+\beamer@sectionintoc {6}{Hydra - Python Multitarefa}{47}{0}{6}
+\beamer@sectionintoc {7}{Coisas Legais no Python}{48}{0}{7}
+\beamer@subsectionintoc {7}{1}{Adicionando cache aos programas}{49}{0}{7}
+\beamer@subsectionintoc {7}{2}{Compilando programas em Python}{54}{0}{7}
+\beamer@sectionintoc {8}{Aprenda Mais!}{58}{0}{8}
