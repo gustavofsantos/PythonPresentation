@@ -1,9 +1,13 @@
-A função \texttt{reduce} foi removida do Python 3.x por detalhes de performance.
-Uma composição com laços de repetição é mais performatica do que o uso desta função.
-    \begin{lstlisting}[language=python]
-In [5]: from functools import reduce
+\frametitle{Compilando programs em Python}
 
-In [7]: reduce(lambda x, acum: x * acum, [1, 2, 3, 4, 5])
-Out[7]: 120
-    \end{lstlisting}
-    Entretanto está disponível na biblioteca \texttt{functools}.
+	\begin{lstlisting}
+$ cd dist
+$ cd python_compilado
+$ pwd
+~/github/PythonPresentation/python_scripts/dist/python_compilado
+$ ./python_compilado
+Oi, tudo bem?
+primeiro inteiro: 8
+segundo inteiro: 9
+17
+	\end{lstlisting}

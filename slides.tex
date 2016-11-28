@@ -6,24 +6,56 @@
 
 \usepackage{setspace}
 \usepackage{listings}		% códigos
+\usepackage{parcolumns}
 \usepackage{color}
 
 \usepackage{hyperref}		% hyperlink
+
+\usepackage{graphicx}		% imagens
+\usepackage{caption}
+\usepackage{subcaption}
 
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
 \definecolor{mymauve}{rgb}{0.58,0,0.82}
 
-\lstset{ %
-  backgroundcolor=\color{white},   % choose the background color
-  basicstyle=\footnotesize,        % size of fonts used for the code
-  breaklines=true,                 % automatic line breaking only at whitespace
-  captionpos=b,                    % sets the caption-position to bottom
-  commentstyle=\color{mygreen},    % comment style
-  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
-  keywordstyle=\color{blue},       % keyword style
-  stringstyle=\color{mymauve},     % string literal style
+\lstdefinestyle{scriptstyle}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  language=Python,
+  xleftmargin=\parindent,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+  numbers=left,
+  numbersep=10pt,
+  tabsize=4,
+  firstline=1,
+  texcl=true,
+  escapeinside={//}{\^^M}
 }
+
+\lstdefinestyle{ipythonstyle}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  language=Python,
+  xleftmargin=\parindent,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+  texcl=true,
+  escapeinside={//}{\^^M}
+}
+
+\lstset{escapechar=@,style=ipythonstyle, texcl=true, escapeinside={//}{\^^M}}
 
 \setbeamertemplate{footline}[frame number]
 \usetheme{metropolis}         % tema
@@ -134,7 +166,7 @@ de performance se comparados com código objeto gerado pelo gcc, por exemplo.
 \end{frame}
 
 \begin{frame}[fragile]
-    \begin{lstlisting}[language=python]
+    \begin{lstlisting}
 In [1]: def mult(x, y):
    ...:     z = x * y
    ...:     return z
@@ -226,33 +258,378 @@ desenvolvimento web e muito mais.
 \begin{frame}
     \frametitle{CPython}
     CPython é a distribuição padrão do Python. O interpretador da linguagem é escrito
-em C (logo, chamado de CPython).
+em ANSI C, o que dá a esta implementação maior poder de portabilidade. O desenvolvimento
+é encabeçado pelo criador da linguagem Python:
+Guido van Rossum e pelo grupo principal de desenvolvimento da linguagem. A distribuição padrão vêm com
+um tradutor de código fonte para bytecode e com uma máquina virtual, chamada de \textbf{Python Virtual Machine}.
+
+	Além do CPython, existem outras implementações conhecidas da linguagem, como
+\textbf{JPython}, \textbf{IronPython}, \textbf{Stackless} e \textbf{PyPy}.
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{CPython}
+	\includegraphics[scale=0.45]{python_imgs/console_python}
 \end{frame}
 
 \begin{frame}
     \frametitle{IPython}
+    O IPython pode ser visto como o REPL padrão do Python, com esteroides. O objetivo do IPython é
+disponibilizar um ambiente exploratório de computação interativa.
     Esta apresentação foi construída quase que em sua totalidade utilizando o IPython para
 debug dos trechos de códigos mostrados ao longo da apresentação.
 \end{frame}
 
-\begin{frame}
-    \frametitle{PyPy}
+\begin{frame}[fragile]
+    \frametitle{IPython}
+	\includegraphics[scale=0.45]{python_imgs/console_ipython}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Anaconda}
+    \frametitle{PyPy}
+    PyPy é uma implementação alternativa do CPython, focada na performance. A grande diferença
+entre o PyPy e o CPython padrão é que o PyPy vêm com um compilador JIT - Just In Time. O
+compilador JIT é acoplado ao PVM como uma extensão, traduzindo partes do código fonte, apenas
+quando necessário. O PyPy consegue executar programas longos escritos em Python, entre 3-5 vezes
+mais rápido que a implementação padrão - CPython.
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{PyPy}
+	\includegraphics[scale=0.45]{python_imgs/console_pypy}
 \end{frame}
 
 %---------------------------------------------------------
 
 \section{A Linguagem}
 
+\begin{frame}[fragile]
+	\frametitle{Tipos básicos de dados}
+	\begin{lstlisting}
+In [1]: type(2**512)
+Out[1]: int
+
+In [2]: type([1, 2, 3])
+Out[2]: list
+
+In [3]: type((1, 2, 3))
+Out[3]: tuple
+
+In [4]: type({1: "Marie", 2: "Maribel", 3: "Meggie", 4: "Elisa"})
+Out[4]: dict
+
+In [5]: type("oi, tudo bem?")
+Out[5]: str
+	\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Tipos básicos de dados}
+	\begin{lstlisting}
+In [6]: type(lambda x: x + x)
+Out[6]: function
+
+In [7]: type(False)
+Out[7]: bool
+
+In [8]: type(1.23e-4)
+Out[8]: float
+
+In [9]: type(range(10))
+Out[9]: range
+
+In [10]: type(enumerate([1, 2, 3]))
+Out[10]: enumerate
+	\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Operações aritméticas}
+
+	\noindent\begin{minipage}{.5\textwidth}
+		\begin{lstlisting}
+In [29]: 1 + 2
+Out[29]: 3
+
+In [30]: 1 * 2
+Out[30]: 2
+
+In [31]: 1 / 2
+Out[31]: 0.5
+
+In [32]: 1 ** 2
+Out[32]: 1
+		\end{lstlisting}
+		\end{minipage}\hfill
+		\begin{minipage}{.45\textwidth}
+		\begin{lstlisting}
+In [33]: 1 >> 2
+Out[33]: 0
+
+In [34]: 1 << 2
+Out[34]: 4
+
+In [35]: 1 % 2
+Out[35]: 1
+		\end{lstlisting}
+	\end{minipage}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Referências a objetos}
+	Python não possui variáveis, em vez disto, possui referências a objetos, que são
+conhecidos como nomes.
+
+	\begin{lstlisting}
+In [11]: g = lambda x: x*x + 2*x
+
+In [12]: a = 4
+
+In [13]: b = 5
+
+In [14]: l = [1, 2, 3, 4, 5]
+
+In [15]: t = (1, 2, 3, 4, 5)
+
+In [16]: d = {0: "oi", "tudo": 1, 2: "bem?"}
+	\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Operador de identificação}
+	\begin{lstlisting}
+In [36]: n1 = 4
+
+In [37]: n2 = 4
+
+In [38]: n1 == n2
+Out[38]: True
+
+In [39]: n1 is n2
+Out[39]: True
+
+In [40]: n3 = 5
+
+In [41]: n1 is n3
+Out[41]: False
+	\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Operador de identificação}
+	\begin{lstlisting}
+In [42]: l1 = [1, 2, 3, 4]
+
+In [43]: l2 = [1, 2, 3, 4]
+
+In [44]: l1 == l2
+Out[44]: True
+
+In [45]: l1 is l2
+Out[45]: False
+
+In [46]: l1 = l2
+
+In [47]: l1 is l2
+Out[47]: True
+	\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{Operações lógicas}
+	\begin{lstlisting}
+In [52]: True or False
+Out[52]: True
+
+In [53]: True and False
+Out[53]: False
+
+In [54]: True or False and True
+Out[54]: True
+
+In [55]: True and False and True
+Out[55]: False
+	\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{Operadores de comparação}
+	\begin{lstlisting}
+In [56]: x = 1; y = 2
+
+In [57]: x == y
+Out[57]: False
+
+In [58]: x != y
+Out[58]: True
+
+In [59]: x < y
+Out[59]: True
+
+In [60]: x >= y
+Out[60]: False
+
+In [61]: 0 < x < y
+Out[61]: True
+	\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{Operadores de comparação}
+	\begin{lstlisting}
+In [62]: t = ("gustavo", 1994, [1, 2, 3], lambda n: n < 1)
+
+In [63]: 1994 in t
+Out[63]: True
+
+In [65]: (lambda n: n < 1) in t
+Out[65]: False
+
+In [66]: [1, 2, 3] in t
+Out[66]: True
+
+In [67]: "gustavo" in t
+Out[67]: True
+	\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{Fluxo de controle}
+	\begin{lstlisting}
+if <expres_booleana>:
+	<comandos>
+elif <expres_booleana>:
+	<comandos>
+else:
+	<comandos>
+
+In [69]: if 3 > 1:
+    ...:     print("3 > 1")
+    ...: elif 2 < 5:
+    ...:	 print("2 < 5")
+    ...: else:
+    ...:     print("oops")
+    ...:
+3 > 1
+	\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Laço de repetição \texttt{while}}
+	\begin{lstlisting}
+while <expres_booleana>:
+	<comandos>
+
+In [78]: while n != 0:
+    ...:     n = int(input("chute um numero:"))
+    ...:     if n == 0:
+    ...:         print("acertou!")
+    ...:
+chute um numero:5
+chute um numero:1
+chute um numero:0
+acertou!
+
+In [79]:
+	\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{Laço de repetição \texttt{for}}
+	\begin{lstlisting}
+for <variavel> in <iteravel>:
+	<comandos>
+
+In [80]: for i in range(5):
+    ...:     print("i+i=", i+i)
+    ...:
+i+i= 0
+i+i= 2
+i+i= 4
+i+i= 6
+i+i= 8
+	\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{Excessções}
+	\begin{lstlisting}
+In [81]: def f():
+    ...:     i = input("digite um inteiro: ")
+    ...:     try:
+    ...:         i2 = int(i)
+    ...:         print("o valor eh:", i2)
+    ...:     except:
+    ...:         print("o valor digitado nao eh um inteiro")
+    ...:
+
+In [82]: f()
+digite um inteiro: 4
+o valor eh: 4
+
+In [83]: f()
+digite um inteiro: oi
+o valor digitado nao eh um inteiro
+	\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{Executando scripts}
+
+	\lstinputlisting[style=scriptstyle]{python_scripts/hello_world.py}
+
+	Se você está usando Linux, precisa apenas dar a permissão de execução para o script,
+então ele irá invocar a PVM automaticamente baseado no caminho especificado na primeira
+linha do script.
+
+	\begin{lstlisting}
+$ chmod +x hello_world.py
+$ ./hello_world.py
+> Gustavo Santos
+Ola, Gustavo Santos
+	\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Executando scripts}
+
+	\lstinputlisting[style=scriptstyle]{python_scripts/hello_world_2.py}
+
+	\begin{lstlisting}
+$ chmod +x hello_world_2.py
+$ ./hello_world_2.py Gustavo Santos
+Ola, Gustavo Santos
+	\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+	\begin{lstlisting}
+In [5]: def fatorial(x):
+   ...:     if x < 0:
+   ...:         return None
+   ...:     elif x < 2:
+   ...:         return x
+   ...:     else:
+   ...:         return x*fatorial(x-1)
+   ...:
+
+In [6]: fatorial(3)
+Out[6]: 6
+
+In [7]: fatorial(-4)
+	\end{lstlisting}
+\end{frame}
 
 %---------------------------------------------------------
 
 \section{Paradigmas de Programação e Python 3.x}
-
-\subsection{Python Funcional}
 
 \begin{frame}{3 Pilares das Linguagens Funcionais}
 
@@ -332,12 +709,137 @@ nem mesmo como tendo suporte a programação funcional, como Scala.
 
 \subsection{Adicionando cache aos programas}
 
+\begin{frame}[fragile]
+	\frametitle{Adicionando cache aos programas}
+	\noindent\begin{minipage}{.5\textwidth}
+		\lstinputlisting[style=scriptstyle]{python_scripts/fib_cache.py}
+		\end{minipage}\hfill
+		\begin{minipage}{.45\textwidth}
+		\lstinputlisting[style=scriptstyle]{python_scripts/fib_rec.py}
+	\end{minipage}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Adicionando cache aos programas}
+	\begin{lstlisting}[mathescape=true]
+In [15]: from fib_rec import fib_rec
+
+In [16]: from fib_cache import fib_cache
+
+In [17]: %time fib_rec(35)
+CPU times: user 12.6 s, sys: 3.33 ms, total: 12.6 s
+Wall time: 12.7 s
+Out[17]: 9227465
+
+In [18]: %time fib_cache(35)
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 59.6 $\mu$s
+Out[18]: 9227465
+	\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Adicionando cache aos programas}
+	\lstinputlisting[style=scriptstyle, basicstyle=\tiny]{python_scripts/fib_test.py}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Adicionando cache aos programas}
+	\begin{lstlisting}
+In [8]: valores = [i for i in range(10, 30)]
+
+In [9]: tempos_cache = fib_test.test_cache(valores)
+
+In [10]: tempos_rec = fib_test.test_rec(valores)
+	\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Adicionando cache aos programas}
+	\begin{figure}
+		\centering
+		\begin{subfigure}{.5\textwidth}
+		  \centering
+		  \includegraphics[width=.95\linewidth]{python_imgs/test_cache}
+		  \caption{Implementação com cache}
+		  \label{fig:sub1}
+		\end{subfigure}%
+		\begin{subfigure}{.5\textwidth}
+		  \centering
+		  \includegraphics[width=.95\linewidth]{python_imgs/test_rec}
+		  \caption{Implementação sem cache}
+		  \label{fig:sub2}
+		\end{subfigure}
+		\caption{Tempos das implementações recursivas da função de Fibonacci com e sem cache}
+		\label{fig:test}
+	\end{figure}
+\end{frame}
+
 \subsection{Compilando programas em Python}
 
+\begin{frame}[fragile]
+	\frametitle{Compilando programs em Python}
+	É necessário o módulo PyInstaller, disponível para Linux, Mac e Windows.
+
+	\begin{lstlisting}
+$ pip install PyInstaller
+	\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Compilando programs em Python}
+	\lstinputlisting[style=scriptstyle]{python_scripts/python_compilado.py}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Compilando programs em Python}
+
+	\begin{lstlisting}
+$ pyinstaller python_compilado.py
+79 INFO: PyInstaller: 3.2
+79 INFO: Python: 3.5.2
+85 INFO: Platform: Linux-4.8.10-1-ARCH-x86_64-with-arch
+85 INFO: wrote /home/gustavo/github/PythonPresentation/python_scripts/python_compilado.spec
+87 INFO: UPX is not available.
+93 INFO: Extending PYTHONPATH with paths
+['/home/gustavo/github/PythonPresentation/python_scripts',
+ '/home/gustavo/github/PythonPresentation/python_scripts']
+93 INFO: checking Analysis
+93 INFO: Building Analysis because out00-Analysis.toc is non existent
+94 INFO: Initializing module dependency graph...
+	\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Compilando programs em Python}
+
+	\begin{lstlisting}
+$ cd dist
+$ cd python_compilado
+$ pwd
+~/github/PythonPresentation/python_scripts/dist/python_compilado
+$ ./python_compilado
+Oi, tudo bem?
+primeiro inteiro: 8
+segundo inteiro: 9
+17
+	\end{lstlisting}
+\end{frame}
 
 %---------------------------------------------------------
 
 \section{Aprenda Mais!}
+
+\begin{frame}
+	\frametitle{Aprenda Mais!}
+	\begin{itemize}
+		\item \textbf{Learning Python}. \textit{Mark Lutz}.O'Reilly.
+		\item \textbf{Learning IPython for Interactive Computing and Data Visualization}.
+\textit{Cyrille Rossant}. Packt Publishing Ltd. Birmingham, UK. 2015. ISBN 978-1-78398-698-9.
+		\item \textbf{Mastering Pandas}. \textit{Femi Anthony}. Packt Publishing Ltd.
+Birmingham, UK. 2015. ISBN 978-1-78398-196-0.
+	\end{itemize}
+\end{frame}
 
 \begin{frame}
     Esta apresentação e todos os scripts apresentados estão disponíveis
